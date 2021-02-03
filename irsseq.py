@@ -1,4 +1,3 @@
-# coding: UTF-8
 import sys
 import numpy as np
 from Bio import Seq,SeqIO
@@ -267,15 +266,14 @@ def getcalccounts(clist, tlist, fasdic):
 
 def savetxt(nda:list, fname:str):
     with open(fname, "w") as wf:
-        #for i, n in enumerate(nda):
         for n in nda:
             wf.write("\t".join([str(i) for i in n])+"\n")
 
-
-(clist, tlist) = readfiles(ctrlist, trelist)
-fasdic = getfastadic(fastafi)
-(calccounts, caldic) = getcalccounts(clist, tlist, fasdic)
-savetxt(calccounts, outf)
+if __name__ == "__main__":
+    (clist, tlist) = readfiles(ctrlist, trelist)
+    fasdic = getfastadic(fastafi)
+    (calccounts, caldic) = getcalccounts(clist, tlist, fasdic)
+    savetxt(calccounts, outf)
 
 
 
