@@ -13,3 +13,5 @@ Script irsseq.py calculates the IRS/PCS scores of each intron based on the count
 - Usage: python3 gtfbamcount.py [bamcount file list: control] [bamcount file list: treated] [genome FASTA file name] [output file name]<br>
 - Bamcount filenames are delimited by commas without spaces.<br>
 - Example: python3 gtfbamcount.py wt1.bam.txt,wt2.bam.txt,wt3.bam.txt ko1.bam.txt,ko2.bam.txt,ko3.bam.txt genome.fa outfile.txt<br>
+
+```python3 ```
