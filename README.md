@@ -1,5 +1,3 @@
-# irscalc
-
 This repository contains analysis scripts for:<br>
 Ishigami et al. (2021) A single m<sup>6</sup>A modification in U6 snRNA diversifies exon sequence at the 5’ splice site. (Nature Communications)<br>
 
@@ -14,4 +12,19 @@ Script irsseq.py calculates the IRS/PCS scores of each intron based on the count
 - Bamcount filenames are delimited by commas without spaces.<br>
 - Example: python3 gtfbamcount.py wt1.bam.txt,wt2.bam.txt,wt3.bam.txt ko1.bam.txt,ko2.bam.txt,ko3.bam.txt genome.fa outfile.txt<br>
 
-```python3 ```
+Example code:
+
+```
+python3 gtfbamcount.py WT1.bam Schizosaccharomyces_pombe.ASM294v2.46.gtf WT1_count.txt
+python3 gtfbamcount.py WT2.bam Schizosaccharomyces_pombe.ASM294v2.46.gtf WT2_count.txt
+python3 gtfbamcount.py WT3.bam Schizosaccharomyces_pombe.ASM294v2.46.gtf WT3_count.txt
+python3 gtfbamcount.py WT4.bam Schizosaccharomyces_pombe.ASM294v2.46.gtf WT4_count.txt
+python3 gtfbamcount.py KO1.bam Schizosaccharomyces_pombe.ASM294v2.46.gtf KO1_count.txt
+python3 gtfbamcount.py KO2.bam Schizosaccharomyces_pombe.ASM294v2.46.gtf KO2_count.txt
+python3 gtfbamcount.py KO3.bam Schizosaccharomyces_pombe.ASM294v2.46.gtf KO3_count.txt
+python3 gtfbamcount.py KO4.bam Schizosaccharomyces_pombe.ASM294v2.46.gtf KO4_count.txt
+
+python3 irsseq.py WT1_count.txt,WT2_count.txt,WT3_count.txt,WT4_count.txt \
+                  KO1_count.txt,KO2_count.txt,KO3_count.txt,KO4_count.txt \
+                  Schizosaccharomyces_pombe.ASM294v2.dna.toplevel.fa 200405pseseqcount.txt
+```
