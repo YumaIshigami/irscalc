@@ -2,7 +2,7 @@ This repository contains analysis scripts for:<br>
 Ishigami et al. (2021) A single m<sup>6</sup>A modification in U6 snRNA diversifies exon sequence at the 5’ splice site. (Nature Communications)<br>
 
 Environment:<br>
-- python 3.8.5 with packages pysam, Biopython and numpy installed<br>
+- python 3.8.5 with packages pysam, Biopython and numpy<br>
 
 Script gtfbamcounts.py counts the reads mapped on splice junctions and classify them depending on their splicing pattern.<br>
 - Usage: python3 gtfbamcount.py [BAM file name] [GTF file name] [output bamcount file name]<br>
