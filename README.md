@@ -26,5 +26,5 @@ python3 gtfbamcount.py KO4.bam Schizosaccharomyces_pombe.ASM294v2.46.gtf KO4_cou
 
 python3 irsseq.py WT1_count.txt,WT2_count.txt,WT3_count.txt,WT4_count.txt \
                   KO1_count.txt,KO2_count.txt,KO3_count.txt,KO4_count.txt \
-                  Schizosaccharomyces_pombe.ASM294v2.dna.toplevel.fa 200405pseseqcount.txt
+                  Schizosaccharomyces_pombe.ASM294v2.dna.toplevel.fa pseseqcount.txt
 ```
