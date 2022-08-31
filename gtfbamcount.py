@@ -67,8 +67,11 @@ if __name__ == "__main__":
             if len(gl) == 9:
                 attr = gl[8].split("\"")
                 if gl[2] == "transcript":
-                    genename = attr[attr.index("; gene_name ")+1]
                     geneid = attr[1]
+                    if "; gene_name " in attr:
+                        genename = attr[attr.index("; gene_name ")+1]
+                    else:
+                        genename = geneid
                     tranid = attr[attr.index("; transcript_id ")+1]
                     coordnow = -1
                     sys.stdout.write("\r" + sys.argv[1] + ": " + str(round(i/gtflen*100,2)) + "%" + "; checking:chr" + gl[0] + ": " + gl[3] + ": " + genename + "               ")
