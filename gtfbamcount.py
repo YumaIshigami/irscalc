@@ -1,12 +1,16 @@
 import sys, pysam, datetime
 
-if len(sys.argv) != 4:
-    print("Usage: python3 gtfbamcount.py [BAM file name] [GTF file name] [output bamcount file name]")
+if len(sys.argv) < 4 or 5 < len(sys.argv):
+    print("Usage: python3 gtfbamcount.py [BAM file name] [GTF file name] [output bamcount file name] [OPTIONAL:-m if minus strand exon is in ascending order]")
     exit(1)
     
 inbam = pysam.AlignmentFile(sys.argv[1],"rb")
 ingtf = sys.argv[2]
 outf = sys.argv[3]
+if len(sys.argv) == 5 and sys.argv[4] == "-m":
+    edec = False
+else:
+    edec = True
 
 def countintronic(chromosome, strand, exon1end, exon2start):
     eij = 0
@@ -68,20 +72,25 @@ if __name__ == "__main__":
                 attr = gl[8].split("\"")
                 if gl[2] == "transcript":
                     geneid = attr[1]
-                    if "; gene_name " in attr:
-                        genename = attr[attr.index("; gene_name ")+1]
+                    if "gene_name " in [n[-10:] for n in attr]:
+                        genename = attr[[n[-10:] for n in attr].index("gene_name ")+1]
                     else:
                         genename = geneid
-                    tranid = attr[attr.index("; transcript_id ")+1]
+                    tranid = attr[[n[-14:] for n in attr].index("transcript_id ")+1]
                     coordnow = -1
+                    exonnum = -1
                     sys.stdout.write("\r" + sys.argv[1] + ": " + str(round(i/gtflen*100,2)) + "%" + "; checking:chr" + gl[0] + ": " + gl[3] + ": " + genename + "               ")
                     sys.stdout.flush()
                 if gl[2] == "exon":
-                    if gl[6] == "+":
+                    if "; exon_number " in attr:
+                        exonnum = int(attr[attr.index("; exon_number ")+1])-1
+                    else:
+                        exonnum += 1
+                    if gl[6] == "+" or (not edec and (gl[6] == "+" or gl[6] == "-")):
                         if coordnow == -1:
                             coordnow = int(gl[4])
                         else:
-                            tmpl = [gl[0],str(coordnow+1),str(int(gl[3])-1),gl[6],geneid,genename,tranid,str(int(attr[5])-1)]
+                            tmpl = [gl[0],str(coordnow+1),str(int(gl[3])-1),gl[6],geneid,genename,tranid,str(exonnum)]
                             tmpl.extend(countintronic(gl[0],gl[6],coordnow,int(gl[3])))
                             intlist.append(tmpl)
                             coordnow = int(gl[4])
@@ -89,7 +98,7 @@ if __name__ == "__main__":
                         if coordnow == -1:
                             coordnow = int(gl[3])
                         else:
-                            tmpl = [gl[0],str(int(gl[4])+1),str(coordnow-1),gl[6],geneid,genename,tranid,str(int(attr[5])-1)]
+                            tmpl = [gl[0],str(int(gl[4])+1),str(coordnow-1),gl[6],geneid,genename,tranid,str(exonnum)]
                             #print tmpl
                             tmpl.extend(countintronic(gl[0],gl[6],int(gl[4]),coordnow))
                             intlist.append(tmpl)
